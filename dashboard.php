@@ -13,6 +13,6 @@
                 <?php require_once("./includes/dashboard-dashboard.php");?>
                 
                   <?php require_once("./includes/dashboard-page-visit.php");?>
-                       <?php require_once("./includes/dashboard-team.php");?>
+                       <?php //require_once("./includes/dashboard-team.php");?>
                        
                 <?php require_once("./includes/dashboard-footer.php");?>
