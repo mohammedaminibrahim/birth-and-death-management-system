@@ -29,7 +29,7 @@ if(empty($password) && empty($password)){
             if(password_verify($password, $column['password'])){
               $_SESSION['fullname'] = $_POST['fullname'];
               $_SESSION['email'] = $_POST['email'];
-              header("location: index.php");
+              header("location: dashboard.php");
               ob_end_flush();
             } else{
               $_SESSION['message'] = "Wrong Password!! Try again!!";

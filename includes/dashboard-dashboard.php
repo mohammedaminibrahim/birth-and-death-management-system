@@ -71,10 +71,34 @@
                                         <h3 class="mb-1">50.88%</h3>
                                     </div>
                                 </div>
+                                <?php
+                                
+                                require_once("./config.php");
+                                $sqltotalNumberOfBirth = "SELECT * FROM birth";
+                                $statement = $conn->prepare($sqltotalNumberOfBirth);
+                                $results = $statement->execute();
+                                $totalNumberOfBirth = $statement->rowCount();
+                            
+                                $sqltotalNumberOfBirth = "SELECT SUM(population) AS totalPop FROM population";
+                                $statement = $conn->prepare($sqltotalNumberOfBirth);
+                                $results = $statement->execute();
+                                $columns = $statement->fetch(PDO::FETCH_ASSOC);
+                                $totalPopulation = $columns['totalPop'];
+                                //$totalPopulation = $statement->rowCount();
+                               // $totalPopulation = $totalPopulation + $totalPopulation;
+                            
+                             
+                                   
+                            
+                                    $totalBirthRate = ($totalNumberOfBirth / $totalPopulation) * 10000;
+                                   
+                                
+                                
+                                ;?>
                                 <div class="col-12 col-xl-7 px-xl-0">
                                     <div class="d-none d-sm-block">
                                         <h2 class="h6 text-gray-400 mb-0"> Birth & Death Ratio</h2>
-                                        <h3 class="fw-extrabold mb-2">50.88%</h3>
+                                        <h3 class="fw-extrabold mb-2"><?= round($totalBirthRate);?>%</h3>
                                     </div>
                                     <small class="text-gray-500">
                                     As at- <?php echo date("d-m-y");?> 

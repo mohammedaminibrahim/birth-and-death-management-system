@@ -33,51 +33,48 @@ require_once("./includes/dashboard-head.php");?>
                         require_once("./auxiliaries.php");
 
                         if(isset($_POST['submit'])){
-                            $nameofhospital = sterilize($_POST['nameofhospital']);
-                            $nameofmother = sterilize($_POST['nameofmother']);
-                            $nameoffather = sterilize($_POST['nameoffather']);
-                            $nameofbaby = sterilize($_POST['nameofbaby']);
-                            $dateofbirth = sterilize($_POST['dateofbirth']);
-                            $gender = sterilize($_POST['gender']);
-                            $contactofparents = sterilize($_POST['contactofparents']);
-                            $addressofparents = sterilize($_POST['addressofparents']);
-                            $placeofbirth = sterilize($_POST['placeofbirth']);
+                          $instname = sterilize($_POST['instname']);
+                          $instaddress = sterilize($_POST['instaddress']);
+                          $contactaddress = sterilize($_POST['contactaddress']);
+                          $typeofinstitution = sterilize($_POST['typeofinstitution']);
+                          $officerfullname = sterilize($_POST['officerfullname']);
+                          $officeremail = sterilize($_POST['officeremail']);
+                          $officeraddress = sterilize($_POST['officeraddress']);
 
-                            if(!empty($nameofhospital) && !empty($nameofmother) && !empty($nameoffather) && !empty($nameofbaby) && !empty($dateofbirth) && !empty($gender) && !empty($contactofparents) 
-                            && !empty($addressofparents) && !empty($placeofbirth)) {
-                                //check if data already exist
-                                $slq = "SELECT * FROM birth WHERE nameofhospital = '$nameofhospital' AND nameofmother = '$nameofmother' AND
-                                nameoffather = '$nameoffather' AND nameofbaby = '$nameofbaby' AND dateofbirth = '$dateofbirth' AND gender = '$gender'";
-                                $statement = $conn->prepare($slq);
-                                $results = $statement->execute();
-                                $rows = $statement->rowCount();
+                          //check if all fields are not empty
+                          if(!empty($instname) && !empty($instaddress) && !empty($contactaddress) && !empty($typeofinstitution)
+                          && !empty($officerfullname) && !empty($officeremail) && !empty($officeraddress)){
+                              //check if inst already exist
+                              $sqlSelectFromDb = "SELECT * FROM institutions WHERE instname = '$instname' 
+                              AND instaddress = '$instaddress' AND typeofinstitution = '$typeofinstitution'";
+                              $statement = $conn->prepare($sqlSelectFromDb);
+                              $results = $statement->execute();
+                              $row = $statement->rowCount();
 
-                                if($rows > 0){
-                                    $_SESSION['message'] = "Child Data Already Exist!!";
+                              if($row > 0){
+                                $_SESSION['message'] = "Institution Exist!!";
+                                $_SESSION['alert'] = "alert alert-warning";
+                              } else {
+                                  $sqlAddnewIns = "INSERT INTO institutions(instname, instaddress, contactaddress, typeofinstitution, officerfullname, officeremail, officeraddress) 
+                                  VALUES('$instname', '$instaddress', '$contactaddress', '$typeofinstitution', '$officerfullname','$officeremail', '$officeraddress')";
+                                  $statement = $conn->prepare($sqlAddnewIns);
+                                  $results = $statement->execute();
+
+                                  if($results){
+                                    $_SESSION['message'] = "INSERTED SUCCESS!!";
+                                    $_SESSION['alert'] = "alert alert-primary";
+                                  } else {
+                                    $_SESSION['message'] = "ALL FIELDS ARE REQUIRED!!";
                                     $_SESSION['alert'] = "alert alert-danger";
-                                } else{
-                                    $insertInfo = "INSERT INTO birth(nameofhospital, nameofmother, nameoffather, nameofbaby, dateofbirth, gender, contactofparents, addressofparents, placeofbirth) 
-                                    VALUES('$nameofhospital', '$nameofmother', '$nameoffather', '$nameofbaby', '$dateofbirth', '$gender', '$contactofparents', '$addressofparents', '$placeofbirth')";
-                                    $statement = $conn->prepare($insertInfo);
-                                    $results = $statement->execute();
-                                    $rows = $statement->rowCount();
+                                  }
 
-                                    if($results){
-                                        $_SESSION['message'] = "New Birth Data Inserted!!";
-                                        $_SESSION['alert'] = "alert alert-success";
-                                        header("location: dashboard.php");
-                                    } else{
-                                        $_SESSION['message'] = "Oops Something Went Wrong!!";
-                                        $_SESSION['alert'] = "alert alert-danger";
-                                    }
 
-                                }
-                            } else{
-                                $_SESSION['message'] = "All Fields Are Required!!";
-                                $_SESSION['alert'] = "alert alert-danger";
-                            }
+                              }
+                          } else{
+                            $_SESSION['message'] = "ALL FIELDS ARE REQUIRED!!";
+                            $_SESSION['alert'] = "alert alert-danger";
+                          }
                         }
-
                         
                         ;?>
                         
@@ -86,41 +83,41 @@ require_once("./includes/dashboard-head.php");?>
                         <form action="" method="POST" class="row g-3">
                           <div class="col-md-3">
                             <label class="form-label disabled" for="validationServer01">Institution Name</label>
-                            <input name="nameofhospital" class="form-control"  aria-disabled="true"  id="validationServer01" type="text" required="">
+                            <input name="instname" class="form-control"  aria-disabled="true"  id="validationServer01" type="text" required="">
                           </div>
                           <div class="col-md-4">
                             <label class="form-label" for="validationServer02">Address</label>
-                            <input name="nameofmother" class="form-control" id="validationServer02" type="text" required="">
+                            <input name="instaddress" class="form-control" id="validationServer02" type="text" required="">
                           </div>
                           <div class="col-md-4">
                             <label class="form-label" for="validationServer02">Contact Address</label>
-                            <input name="nameoffather" class="form-control" id="validationServer02" type="text" required="">
+                            <input name="contactaddress" class="form-control" id="validationServer02" type="text" required="">
                           </div>
                           <div class="col-md-4">
                             <label class="form-label" for="validationServer02">Type of Institution</label>
-                            <input name="nameofbaby" class="form-control" id="validationServer02" type="text" required="">
+                            <select class="form-control" name="typeofinstitution" id="" required>
+                              <option>Select Type of Institution</option>
+                              <option value="Hospital">Hospital</option>
+                              <option value="Research">Research Institution</option>
+                              <option value="Other">Other</option>
+                            </select>
                           </div>
-                          <div class="col-md-3">
-                            <label class="form-label" for="validationServer02">Date of Birth</label>
-                            <input name="dateofbirth" class="form-control" id="validationServer02" type="date" required="">
-                          </div>
+                          <hr>
+                          <p class="text-primary">Information About Officer In charge</p>
                           <div class="col-md-4">
-                            <label class="form-label" for="validationServer01">Gender</label>
-                            <input name="gender" class="form-control"   id="validationServer01" type="text" required="">
+                            <label class="form-label" for="validationServer02">Full name</label>
+                            <input name="officerfullname" class="form-control" id="validationServer02" type="text" required="">
                           </div>
-                          <div class="col-md-3">
-                            <label class="form-label" for="validationServer02">Contact Number of Parents</label>
-                            <input name="contactofparents" class="form-control" id="validationServer02" type="text" required="">
+
+                          <div class="col-md-4">
+                            <label class="form-label" for="validationServer02">Email</label>
+                            <input name="officeremail" class="form-control" id="validationServer02" type="text" required="">
                           </div>
-                          <div class="col-md-3">
-                            <label class="form-label" for="validationServer02">Address of Parents</label>
-                            <input name="addressofparents" class="form-control" id="validationServer02" type="text" required="">
+                        
+                          <div class="col-md-4">
+                            <label class="form-label" for="validationServer02">Contact Address</label>
+                            <input name="officeraddress" class="form-control" id="validationServer02" type="text" required="">
                           </div>
-                          <div class="col-md-3">
-                            <label class="form-label" for="validationServer02">Place of Birth</label>
-                            <input name="placeofbirth" class="form-control" id="validationServer02" type="text" required="">
-                          </div>
-                         
                         
                           <div class="col-12">
                             <input name="submit" value="Submit" class="btn btn-primary" type="submit" role="button">
