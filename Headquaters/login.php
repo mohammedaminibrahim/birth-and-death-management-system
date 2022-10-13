@@ -16,7 +16,7 @@ if(empty($password) && empty($password)){
   $_SESSION['message'] = "All Fields are required...**";
   $_SESSION['alert'] = "alert alert-warning";
 } else {
-  $sqlSelectEmail = "SELECT * from users WHERE email = '$email'";
+  $sqlSelectEmail = "SELECT * from headquaters WHERE email = '$email'";
   $statement = $conn->prepare($sqlSelectEmail);
   $results = $statement->execute();
   $rows = $statement->rowCount();
