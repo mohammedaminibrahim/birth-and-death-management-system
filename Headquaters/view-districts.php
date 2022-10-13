@@ -75,8 +75,8 @@ require_once("./includes/dashboard-head.php");?>
                                                             <td>{$regionname}</td>
                                                             <td>{$createdat}</td>
                                                             <td>
-                                                            <a href='edit-district.php?id={$id}' role='button' class='btn btn-primary'>Edit</a>
-                                                            <a href='delete-district.php?id={$id}' role='button' class='btn btn-danger'>Delete</a>
+                                                            <a href='edit-districts.php?id={$id}' role='button' class='btn btn-primary'>Edit</a>
+                                                            <a href='delete-districts.php?id={$id}' role='button' class='btn btn-danger'>Delete</a>
                                                             </td>
                                                         </tr>
                                                         ";
