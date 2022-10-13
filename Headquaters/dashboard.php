@@ -42,6 +42,6 @@ require_once("./includes/dashboard-head.php");?>
                 <?php require_once("./includes/dashboard-dashboard.php");?>
                 
                   <?php require_once("./includes/dashboard-page-visit.php");?>
-                       <?php require_once("view-institution.php");?>
+                       <?php// require_once("view-institution.php");?>
                        
                 <?php require_once("./includes/dashboard-footer.php");?>
