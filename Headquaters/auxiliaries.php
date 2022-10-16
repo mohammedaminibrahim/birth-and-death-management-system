@@ -25,5 +25,18 @@ $results = $statement->execute();
 $totalNumberOfDeath = $statement->rowCount();
 
 
+//total number of Hospitals
+$sqlNumberOfHospitals = "SELECT * FROM hospitals";
+$statement = $conn->prepare($sqlNumberOfHospitals);
+$results = $statement->execute();
+$totalNumberOfHospitals = $statement->rowCount();
+
+//total number of Districts
+$sqlNumberOfDistricts = "SELECT * FROM districts";
+$statement = $conn->prepare($sqlNumberOfDistricts);
+$results = $statement->execute();
+$totalNumberOfDistricts = $statement->rowCount();
+
+
 
 ;?>
