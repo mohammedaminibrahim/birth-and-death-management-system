@@ -1,5 +1,6 @@
 <?php 
 session_start();
+$activeLink = 2;
 require_once("./includes/dashboard-head.php");?>
 
        <?php
