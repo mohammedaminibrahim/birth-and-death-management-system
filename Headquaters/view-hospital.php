@@ -81,7 +81,7 @@ require_once("./includes/dashboard-head.php");?>
                                                            
                                                             <td>
                                                             <a href='edit-districts.php?id={$id}' role='button' class='btn btn-primary'>Edit</a>
-                                                            <a href='delete-districts.php?id={$id}' role='button' class='btn btn-danger'>Delete</a>
+                                                            <a href='delete-hospital.php?id={$id}' role='button' class='btn btn-danger'>Delete</a>
                                                             </td>
                                                         </tr>
                                                         ";
