@@ -8,47 +8,32 @@ require_once("./config.php");
 require_once("./auxiliaries.php");
 
 
-if(isset($_POST['submit'])){
-  $hospital_id = sterilize($_POST['hospital_id']);
-  $password = sterilize($_POST['password']);
+  if(isset($_POST['submit'])){
+    $hospital_id = sterilize($_POST['hospital_id']);
+    $password = sterilize($_POST['password']);
 
-if(empty($hospital_id) && empty($password)){
-  $_SESSION['message'] = "All Fields are required...**";
-  $_SESSION['alert'] = "alert alert-warning";
-} else {
-  $sqlSelectEmail = "SELECT * from hospitals WHERE hospital_id = '$hospital_id'";
-  $statement = $conn->prepare($sqlSelectEmail);
-  $results = $statement->execute();
-  $rows = $statement->rowCount();
-  $columns = $statement->fetchAll();
-
-  if($results){    
-      if($rows > 0){
-          foreach($columns as $column){
-            //verify password
-            if(password_verify($password, $column['password'])){
-              $_SESSION['fullname'] = $_POST['fullname'];
-              $_SESSION['email'] = $_POST['email'];
-              header("location: dashboard.php");
-              ob_end_flush();
-            } else{
-              $_SESSION['message'] = "Wrong Password!! Try again!!";
-              $_SESSION['alert'] = "alert alert-danger alert-dismissible fade show";
-            }
-          }
-      } else {
-        $_SESSION['message'] = "Sorry!! Email Not Registered!!";
-        $_SESSION['alert'] = "alert alert-danger";
+    if(!empty($hospital_id) && !empty($password)){
+      $sqlCheckHospitalId = "SELECT * FROM hospitals WHERE hospital_id = :hospital_id";
+      $statement = $conn->prepare($sqlCheckHospitalId);
+      $results = $statement->execute(array(
+        ':hospital_id' => $hospital_id
+      ));
+      $rows = $statement->rowCount();
+      $columns = $statement->fetchAll();
+      foreach($columns as $column){
+        if($password == $column['password']){
+          header("location: dashboard.php");
+        } else {
+          $_SESSION['message'] = "Password Incorrect!! {$password}";
+          $_SESSION['alert'] = "alert alert-danger";
+        }
       }
-  } else{
-    $_SESSION['message'] = "Sorry!! Try Again Later!! Something went wrong";
-    $_SESSION['alert'] = "alert alert-danger";
+    } else {
+      $_SESSION['message'] = "Sorry, Provide all Informations";
+      $_SESSION['alert'] = "alert alert-danger";
+    }
+
   }
-} 
-
-}
-
-
 
 
 
@@ -138,10 +123,15 @@ if(empty($hospital_id) && empty($password)){
             <!-- Heading -->
             <div class="text-center mb-5 mb-md-7">
             <?php
+
+              if(isset($_POST['unsetsess'])){
+                unset($_SESSION['message']);
+              }
+
             if(isset($_SESSION['message'])):?>
                 <div class="<?= $_SESSION['alert'];?>"  role="alert">
                     <strong><?= $_SESSION['message'];?></strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    <button type="button" name="unsetsess" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                  </div>
         <?php endif;?>
               <h1 class="h2">Welcome back</h1>
@@ -154,7 +144,7 @@ if(empty($hospital_id) && empty($password)){
               <!-- Form -->
               <div class="mb-4">
                 <label class="form-label" for="signupModalFormLoginEmail">Account Number</label>
-                <input type="email" class="form-control form-control-lg" name="hospital_id" id="signupModalFormLoginEmail" placeholder="email@site.com" aria-label="email@site.com" required>
+                <input type="text" class="form-control form-control-lg" name="hospital_id" id="signupModalFormLoginEmail" placeholder="email@site.com" aria-label="email@site.com" required>
                 <span class="invalid-feedback">Please enter a valid email address.</span>
               </div>
               <!-- End Form -->
