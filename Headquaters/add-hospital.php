@@ -36,9 +36,15 @@ require_once("./includes/dashboard-head.php");?>
                             $locationaddress = sterilize($_POST['locationaddress']);
                             $district_id = sterilize($_POST['district_id']);
                             $region_id = sterilize($_POST['region_id']);
+                            $string = "ABCDEFGHIJKLMNOPQRSYUVWXYZ";
+                            $password = "12345678";
+                        
+                            $hospital_id = substr(str_shuffle($string), 0, 10);
 
-                            if(!empty($district_id) && !empty($region_id)){
-                                $sqlInsert = "INSERT INTO hospitals (hospitalname, locationaddress, region_id, district_id) VALUES('$hospitalname', '$locationaddress','$region_id','$district_id')";
+
+                            if(!empty($hospitalname) && !empty($locationaddress) && !empty($district_id) && !empty($region_id)){
+                                $sqlInsert = "INSERT INTO hospitals (hospital_id, password, hospitalname, locationaddress, region_id, district_id) 
+                                VALUES('$hospital_id', '$password','$hospitalname', '$locationaddress','$region_id','$district_id')";
                                 $statement = $conn->prepare($sqlInsert);
                                 $results = $statement->execute();
                                 if($results){

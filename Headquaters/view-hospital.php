@@ -47,6 +47,7 @@ require_once("./includes/dashboard-head.php");?>
                                         <thead class="thead-light">
                                         <tr>
                                             <th class="border-bottom" scope="col">#</th>
+                                            <th class="border-bottom" scope="col">Hospital ID</th>
                                             <th class="border-bottom" scope="col">Hospital Names</th>
                                             <th class="border-bottom" scope="col">Address</th>
                                             <th class="border-bottom" scope="col">District</th>
@@ -66,6 +67,7 @@ require_once("./includes/dashboard-head.php");?>
                                                 if($results){
                                                     foreach($columns as $column){
                                                         $id = $column['id']; 
+                                                        $hospital_id = $column['hospital_id'];
                                                        $hospitalname = $column['hospitalname'];
                                                        $locationaddress	= $column['locationaddress'];
                                                        $region_id = $column['region_id'];
@@ -74,6 +76,7 @@ require_once("./includes/dashboard-head.php");?>
                                                         echo "
                                                         <tr>
                                                             <td>{$id}</td>
+                                                            <td>{$hospital_id}</td>
                                                             <td>{$hospitalname}</td>
                                                             <td>{$locationaddress}</td>
                                                             <td>{$district_id}</td>
