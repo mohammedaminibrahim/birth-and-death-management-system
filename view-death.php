@@ -1,33 +1,32 @@
-<?php 
+<?php
 session_start();
-require_once("./includes/dashboard-head.php");?>
+$activeLink = 3;
+require_once("./includes/dashboard-head.php"); ?>
 
-       <?php
-       
-        require_once("./includes/dashboard-side-bar.php");
-       
-       ;?>
-        
-        <main class="content">
+<?php
 
-            <?php require_once("./includes/dashboard-top-nav-bar.php");?>
-           
-            <div class="row">
+require_once("./includes/dashboard-side-bar.php");; ?>
+
+    <main class="content">
+
+<?php require_once("./includes/dashboard-top-nav-bar.php"); ?>
+
+    <div class="row">
     <div class="col-12 mb-4">
-        <div class="card border-0 shadow components-section">
-        <?php
-            if(isset($_SESSION['message'])):?>
-                <div class="<?= $_SESSION['alert'];?>"  role="alert">
-                    <strong><?= $_SESSION['message'];?></strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                 </div>
-        <?php endif;?>
-            <div class="card-body">     
-                <div class="row mb-4">
-                    <div class="col-lg-12 col-sm-6">
-                        <!-- Form -->
+    <div class="card border-0 shadow components-section">
+<?php
+if (isset($_SESSION['message'])):?>
+    <div class="<?= $_SESSION['alert']; ?>" role="alert">
+        <strong><?= $_SESSION['message']; ?></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+<?php endif; ?>
+    <div class="card-body">
+    <div class="row mb-4">
+        <div class="col-lg-12 col-sm-6">
+            <!-- Form -->
 
-                        <div class="row">
+            <div class="row">
                 <div class="col-12 col-xl-12">
                     <div class="row">
                         <div class="col-12 mb-4">
@@ -59,30 +58,30 @@ require_once("./includes/dashboard-head.php");?>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                            
-                                                require_once("././config.php");
+                                        <?php
 
-                                                $sqlSelectMostRecentBirth = "SELECT * FROM death";
-                                                $statement = $conn->prepare($sqlSelectMostRecentBirth);
-                                                $results = $statement->execute();
-                                                $rows = $statement->rowCount();
-                                                $columns = $statement->fetchAll();
+                                        require_once("././config.php");
 
-                                                if($results){
-                                                    foreach($columns as $column){
-                                                        $id = $column['id'];
-                                                        $nameofhospital = $column['nameofhospital'];
-                                                        $nameofinformant = $column['nameofinformant'];
-                                                        $nameofdeased = $column['nameofdeased'];
-                                                        $dateofdeath = $column['dateofdeath'];
-                                                        $gender = $column['gender'];
-                                                        $contactofinformant	 = $column['contactofinformant'];
-                                                        $placeofdeath = $column['placeofdeath'];
-                                                        $ageofdeseased = $column['ageofdeseased'];
-                                                        $causeofdeath = $column['causeofdeath'];
+                                        $sqlSelectMostRecentBirth = "SELECT * FROM death";
+                                        $statement = $conn->prepare($sqlSelectMostRecentBirth);
+                                        $results = $statement->execute();
+                                        $rows = $statement->rowCount();
+                                        $columns = $statement->fetchAll();
 
-                                                        echo "
+                                        if ($results) {
+                                            foreach ($columns as $column) {
+                                                $id = $column['id'];
+                                                $nameofhospital = $column['nameofhospital'];
+                                                $nameofinformant = $column['nameofinformant'];
+                                                $nameofdeased = $column['nameofdeased'];
+                                                $dateofdeath = $column['dateofdeath'];
+                                                $gender = $column['gender'];
+                                                $contactofinformant = $column['contactofinformant'];
+                                                $placeofdeath = $column['placeofdeath'];
+                                                $ageofdeseased = $column['ageofdeseased'];
+                                                $causeofdeath = $column['causeofdeath'];
+
+                                                echo "
                                                         <tr>
                                                         <th class='text-gray-900' scope='row'>
                                                             {$id}
@@ -118,15 +117,13 @@ require_once("./includes/dashboard-head.php");?>
                                                         </tr>
                                                         ";
 
-                                                    }
-                                                } else{ 
-                                                    $_SESSION['message'] = "Oooops Something went wrong!!";
-                                                    $_SESSION['alert'] = "alert alert-warning";
-                                                }
-                                            
-                                            ;?>
-                                       
-                                       
+                                            }
+                                        } else {
+                                            $_SESSION['message'] = "Oooops Something went wrong!!";
+                                            $_SESSION['alert'] = "alert alert-warning";
+                                        }; ?>
+
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -135,11 +132,11 @@ require_once("./includes/dashboard-head.php");?>
 
 
                         <!-- End of Form -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-           
 
-                <?php require_once("./includes/dashboard-footer.php");?>
+
+<?php require_once("./includes/dashboard-footer.php"); ?>
