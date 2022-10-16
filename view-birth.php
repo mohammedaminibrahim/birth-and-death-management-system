@@ -52,6 +52,7 @@ require_once("./includes/dashboard-head.php");?>
                                             <th class="border-bottom" scope="col">Parents Name</th>
                                             <th class="border-bottom" scope="col">Parents Address</th>
                                             <th class="border-bottom" scope="col">Parents Contact</th>
+                                            <th class="border-bottom" scope="col">View</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -94,6 +95,9 @@ require_once("./includes/dashboard-head.php");?>
                                                         </td>
                                                         <td class='fw-bolder text-gray-500'>
                                                             {$contactofparents}
+                                                        </td>
+                                                        <td class='fw-bolder text-gray-500'>
+                                                            <a href='certificate.php?id={$id}' class='btn btn-primary' role='button'>Certificate</a>
                                                         </td>
                                                       
                                                         </tr>

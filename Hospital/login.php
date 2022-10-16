@@ -9,14 +9,14 @@ require_once("./auxiliaries.php");
 
 
 if(isset($_POST['submit'])){
-  $email = sterilize($_POST['email']);
+  $hospital_id = sterilize($_POST['hospital_id']);
   $password = sterilize($_POST['password']);
 
-if(empty($password) && empty($password)){
+if(empty($hospital_id) && empty($password)){
   $_SESSION['message'] = "All Fields are required...**";
   $_SESSION['alert'] = "alert alert-warning";
 } else {
-  $sqlSelectEmail = "SELECT * from headquaters WHERE email = '$email'";
+  $sqlSelectEmail = "SELECT * from hospitals WHERE hospital_id = '$hospital_id'";
   $statement = $conn->prepare($sqlSelectEmail);
   $results = $statement->execute();
   $rows = $statement->rowCount();
@@ -153,8 +153,8 @@ if(empty($password) && empty($password)){
             <form action="" method="POST">
               <!-- Form -->
               <div class="mb-4">
-                <label class="form-label" for="signupModalFormLoginEmail">Your email</label>
-                <input type="email" class="form-control form-control-lg" name="email" id="signupModalFormLoginEmail" placeholder="email@site.com" aria-label="email@site.com" required>
+                <label class="form-label" for="signupModalFormLoginEmail">Account Number</label>
+                <input type="email" class="form-control form-control-lg" name="hospital_id" id="signupModalFormLoginEmail" placeholder="email@site.com" aria-label="email@site.com" required>
                 <span class="invalid-feedback">Please enter a valid email address.</span>
               </div>
               <!-- End Form -->
