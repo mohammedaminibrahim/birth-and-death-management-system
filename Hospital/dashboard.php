@@ -1,8 +1,8 @@
 <?php
     session_start();
-    if(!isset($_SESSION['email']) OR $_SESSION['email'] == 0){
-        header("location: login.php");
-    }
+    // if(!isset($_SESSION['email']) OR $_SESSION['email'] == 0){
+    //     header("location: login.php");
+    // }
 
     require_once("./config.php");
     $sqltotalNumberOfBirth = "SELECT * FROM birth";
