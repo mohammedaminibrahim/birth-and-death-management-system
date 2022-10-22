@@ -1,34 +1,33 @@
-<?php 
+<?php
 session_start();
 $activeLink = 2;
-require_once("./includes/dashboard-head.php");?>
+require_once("./includes/dashboard-head.php");
+require_once 'auxiliaries.php';
+require_once("./includes/dashboard-side-bar.php");
+require_once("./config.php");
+?>
+    <main class="content">
+    <div class="mt-5 mb-5">
 
-       <?php
-       
-        require_once("./includes/dashboard-side-bar.php");
-       
-       ;?>
-        
-        <main class="content">
 
-            <?php require_once("./includes/dashboard-top-nav-bar.php");?>
-           
-            <div class="row">
+        <a href="./add-birth-record.php" class="btn btn-gray-800 d-inline-flex align-items-center me-2"
+           aria-haspopup="true" aria-expanded="false">
+            <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            New Record
+        </a>
+    </div>
+    <div class="row">
     <div class="col-12 mb-4">
-        <div class="card border-0 shadow components-section">
-        <?php
-            if(isset($_SESSION['message'])):?>
-                <div class="<?= $_SESSION['alert'];?>"  role="alert">
-                    <strong><?= $_SESSION['message'];?></strong>
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                 </div>
-        <?php endif;?>
-            <div class="card-body">     
-                <div class="row mb-4">
-                    <div class="col-lg-12 col-sm-6">
-                        <!-- Form -->
-
-                        <div class="row">
+    <div class="card border-0 shadow components-section">
+<?php get_session_message(SESSION_TYPE_SUCCESS); ?>
+    <div class="card-body">
+    <div class="row mb-4">
+        <div class="col-lg-12 col-sm-6">
+            <div class="row">
                 <div class="col-12 col-xl-12">
                     <div class="row">
                         <div class="col-12 mb-4">
@@ -38,9 +37,6 @@ require_once("./includes/dashboard-head.php");?>
                                         <div class="col">
                                             <h2 class="fs-5 fw-bold mb-0">Most Recent Birth</h2>
                                         </div>
-                                        <!-- <div class="col text-end">
-                                            <a href="#" class="btn btn-sm btn-primary">See all</a>
-                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="table-responsive">
@@ -53,31 +49,22 @@ require_once("./includes/dashboard-head.php");?>
                                             <th class="border-bottom" scope="col">Parents Name</th>
                                             <th class="border-bottom" scope="col">Parents Address</th>
                                             <th class="border-bottom" scope="col">Parents Contact</th>
-                                            <th class="border-bottom" scope="col">View</th>
+                                            <th class="border-bottom" scope="col"></th>
+                                            <th class="border-bottom" scope="col"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                            <?php
-                                            
-                                                require_once("././config.php");
+                                        <?php
+                                        $sqlSelectMostRecentBirth = "SELECT * FROM birth";
+                                        $statement = $conn->prepare($sqlSelectMostRecentBirth);
+                                        $results = $statement->execute();
+                                        $rows = $statement->rowCount();
+                                        $columns = $statement->fetchAll();
+                                        if ($results) {
+                                            foreach ($columns as $column) {
+                                                extract($column);
 
-                                                $sqlSelectMostRecentBirth = "SELECT * FROM birth";
-                                                $statement = $conn->prepare($sqlSelectMostRecentBirth);
-                                                $results = $statement->execute();
-                                                $rows = $statement->rowCount();
-                                                $columns = $statement->fetchAll();
-
-                                                if($results){
-                                                    foreach($columns as $column){
-                                                        $id = $column['id'];
-                                                        $nameofbaby = $column['nameofbaby'];
-                                                        $nameofmother = $column['nameofmother'];
-                                                        $dateofbirth = $column['dateofbirth'];
-                                                        $nameoffather = $column['nameoffather'];
-                                                        $addressofparents = $column['addressofparents'];
-                                                        $contactofparents = $column['contactofparents'];
-
-                                                        echo "
+                                                echo "
                                                         <tr>
                                                         <th class='text-gray-900' scope='row'>
                                                             {$id}
@@ -98,21 +85,20 @@ require_once("./includes/dashboard-head.php");?>
                                                             {$contactofparents}
                                                         </td>
                                                         <td class='fw-bolder text-gray-500'>
+                                                            <a href='./edit-birth-record.php?id={$id}' class='btn btn-info' role='button'>Edit</a>
+                                                        </td>
+                                                        <td class='fw-bolder text-gray-500'>
                                                             <a href='certificate.php?id={$id}' class='btn btn-primary' role='button'>Certificate</a>
                                                         </td>
                                                       
                                                         </tr>
                                                         ";
 
-                                                    }
-                                                } else{ 
-                                                    $_SESSION['message'] = "Oooops Something went wrong!!";
-                                                    $_SESSION['alert'] = "alert alert-warning";
-                                                }
-                                            
-                                            ;?>
-                                       
-                                       
+                                            }
+                                        } else {
+                                            $_SESSION['message'] = "Oooops Something went wrong!!";
+                                            $_SESSION['alert'] = "alert alert-warning";
+                                        } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -121,11 +107,11 @@ require_once("./includes/dashboard-head.php");?>
 
 
                         <!-- End of Form -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-           
 
-                <?php require_once("./includes/dashboard-footer.php");?>
+
+<?php require_once("./includes/dashboard-footer.php"); ?>

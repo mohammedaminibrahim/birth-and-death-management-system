@@ -1,9 +1,12 @@
 <?php
 
+const SESSION_TYPE_ERROR = 'ste';
+const SESSION_TYPE_SUCCESS = 'sts';
 
 
 //clean POST vars
-function sterilize($element){
+function sterilize($element)
+{
     return trim(htmlspecialchars($element));
 }
 
@@ -22,8 +25,4 @@ $totalNumberOfbirth = $statement->rowCount();
 $sqlTotalNumberOfDeath = "SELECT * FROM death";
 $statement = $conn->prepare($sqlTotalNumberOfDeath);
 $results = $statement->execute();
-$totalNumberOfDeath = $statement->rowCount();
-
-
-
-;?>
+$totalNumberOfDeath = $statement->rowCount();; ?>
