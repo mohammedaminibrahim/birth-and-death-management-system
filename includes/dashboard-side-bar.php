@@ -1,16 +1,14 @@
 <?php
-function isActive($activeLink, $linkNumber)
-{
-    if (!isset($activeLink))
-        $activeLink = 1;
-    return $activeLink == $linkNumber ? 'active' : '';
+function activeLink($link='/'){
+    $uri = $_SERVER['REQUEST_URI'];
+    $page = parse_url($uri)['path'];
+    return $page == $link ? 'active' : '';
 }
-
 ?>
 <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
-    <a class="navbar-brand me-lg-5" href="../../index.html">
-        <img class="navbar-brand-dark" src="./assets/img/brand/light.svg" alt="Volt logo"/> <img
-                class="navbar-brand-light" src="./assets/img/brand/dark.svg" alt="Volt logo"/>
+    <a class="navbar-brand me-lg-5" href="#">
+        <img class="navbar-brand-dark" src="../assets/img/brand/light.svg" alt="Volt logo"/> <img
+                class="navbar-brand-light" src="../assets/img/brand/dark.svg" alt="Volt logo"/>
     </a>
     <div class="d-flex align-items-center">
         <button class="navbar-toggler d-lg-none collapsed" type="button" data-bs-toggle="collapse"
@@ -26,12 +24,12 @@ function isActive($activeLink, $linkNumber)
         <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
             <div class="d-flex align-items-center">
                 <div class="avatar-lg me-4">
-                    <img src="./assets/img/team/profile-picture-3.jpg" class="card-img-top rounded-circle border-white"
+                    <img src="../assets/img/team/profile-picture-3.jpg" class="card-img-top rounded-circle border-white"
                          alt="Bonnie Green">
                 </div>
                 <div class="d-block">
                     <h2 class="h5 mb-3">Hi, Jane</h2>
-                    <a href="../../pages/examples/sign-in.html"
+                    <a href="#"
                        class="btn btn-secondary btn-sm d-inline-flex align-items-center">
                         <svg class="icon icon-xxs me-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                              xmlns="http://www.w3.org/2000/svg">
@@ -56,15 +54,15 @@ function isActive($activeLink, $linkNumber)
         </div>
         <ul class="nav flex-column pt-3 pt-md-0">
             <li class="nav-item">
-                <a href="././dashboard.php" class="nav-link d-flex align-items-center">
+                <a href="../dashboard.php" class="nav-link d-flex align-items-center">
           <span class="sidebar-icon">
             <!-- <img src="./assets/img/brand/light.svg" height="20" width="20" alt="Volt Logo"> -->
           </span>
                     <span class="mt-1 ms-1 sidebar-text">Overview</span>
                 </a>
             </li>
-            <li class="nav-item <?= isActive($activeLink, 1) ?>">
-                <a href="././dashboard.php" class="nav-link">
+            <li class="nav-item <?= activeLink('/dashboard.php' ) ?>">
+                <a href="../dashboard.php" class="nav-link">
           <span class="sidebar-icon">
             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path
                         d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path
@@ -74,8 +72,8 @@ function isActive($activeLink, $linkNumber)
                 </a>
             </li>
 
-            <li class="nav-item <?=isActive($activeLink, 2)  ?> ">
-                <a href="././view-birth.php" class="nav-link">
+            <li class="nav-item <?=activeLink('/view-birth.php')  ?> ">
+                <a href="../view-birth.php" class="nav-link">
           <span class="sidebar-icon">
             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path
                         d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path><path fill-rule="evenodd"
@@ -85,8 +83,8 @@ function isActive($activeLink, $linkNumber)
                     <span class="sidebar-text">View Birth records</span>
                 </a>
             </li>
-            <li class="nav-item <?= isActive($activeLink, 3)  ?>">
-                <a href="././view-death.php" class="nav-link">
+            <li class="nav-item <?= activeLink('/view-death.php')  ?>">
+                <a href="../view-death.php" class="nav-link">
           <span class="sidebar-icon">
             <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path
                         fill-rule="evenodd"
@@ -97,9 +95,9 @@ function isActive($activeLink, $linkNumber)
                 </a>
             </li>
 
-            <a href="././settings.php">
+            <a href="../settings.php">
 
-                <li class="nav-item <?= isActive($activeLink, 4)  ?>">
+                <li class="nav-item <?= activeLink('/settings.php')  ?>">
         <span
                 class="nav-link  collapsed  d-flex justify-content-between align-items-center"
                 data-bs-toggle="collapse" data-bs-target="#submenu-app">

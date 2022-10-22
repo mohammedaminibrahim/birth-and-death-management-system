@@ -1,4 +1,8 @@
+<?php
+include_once __DIR__. '/../helper_functions.php';
+include_once __DIR__. '/../db_query_helpers.php';
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 
